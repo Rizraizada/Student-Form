@@ -1,0 +1,179 @@
+
+.container {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 40px;
+    position: center;
+  }
+
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+form {
+  padding: 50px;
+  background-color: #f2f2f2;
+  border-radius: 19px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+select {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+textarea {
+  height: 100px;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  margin-right: 5px;
+}
+
+table {
+  width: 100%;
+  margin-bottom: 10px;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 5px;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
+}
+
+.delete-button {
+  padding: 5px 10px;
+  background-color: #e60000;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+#trainingContainer {
+  margin-bottom: 10px;
+}
+
+hr {
+  margin: 10px 0;
+  border: none;
+  border-top: 1px solid #ccc;
+}
+
+button[type="button"],
+input[type="submit"] {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+button[type="button"]:hover,
+input[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+
+
+
+/* admin part */
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+  }
+  
+  /* Style for form labels */
+  label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  /* Style for form inputs and select elements */
+  input[type="text"],
+  input[type="email"],
+  textarea,
+  select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  /* Style for submit button */
+  input[type="submit"] {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: #45a049;
+  }
+  
+  /* Style for dropdown lists */
+  select {
+    height: 34px;
+  }
+  
+  /* Style for form section headers */
+  .section-header {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  /* Style for form section separator */
+  .section-separator {
+    margin: 20px 0;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  /* Style for error messages */
+  .error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  
+  /* Style for success message */
+  .success-message {
+    color: green;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  

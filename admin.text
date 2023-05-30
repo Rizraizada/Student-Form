@@ -1,0 +1,371 @@
+<?php
+$applicantName = '';
+$emailAddress = '';
+$selectedDivision = '';
+$selectedDistrict = '';
+$selectedUpazila = '';
+
+$districtOptions = array(
+    'Dhaka' => array('Dhaka District 1', 'Dhaka District 2', 'Dhaka District 3'),
+    'Chittagong' => array('Chittagong District 1', 'Chittagong District 2', 'Chittagong District 3'),
+    'Rajshahi' => array('Rajshahi District 1', 'Rajshahi District 2', 'Rajshahi District 3'),
+    'Barisal' => array('Barisal District 1', 'Barisal District 2', 'Barisal District 3'),
+    'Sylhet' => array('Sylhet District 1', 'Sylhet District 2', 'Sylhet District 3'),
+    'Khulna' => array('Khulna District 1', 'Khulna District 2', 'Khulna District 3'),
+    'Mymensingh' => array('Mymensingh District 1', 'Mymensingh District 2', 'Mymensingh District 3'),
+    'Rangpur' => array('Rangpur District 1', 'Rangpur District 2', 'Rangpur District 3'),
+);
+
+$upazilaOptions = array(
+    'Dhaka District 1' => array('Upazila 1', 'Upazila 2', 'Upazila 4'),
+    'Dhaka District 2' => array('Upazila 4', 'Upazila 5', 'Upazila 6'),
+    'Dhaka District 3' => array('Upazila 7', 'Upazila 8', 'Upazila 9'),
+    'Chittagong District 1' => array('Upazila 13', 'Upazila 14', 'Upazila 15'),
+);
+
+function generateOptions($options, $selectedValue = '')
+{
+    $html = '<option value="">Select an option</option>';
+    foreach ($options as $option) {
+        $selected = ($selectedValue === $option) ? 'selected' : '';
+        $html .= '<option value="' . $option . '" ' . $selected . '>' . $option . '</option>';
+    }
+    return $html;
+}
+
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-top: 20px;
+        }
+
+        .form-container {
+            width: 488px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            margin-top: 5px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-primary:hover {
+            background-color: #45a049;
+        }
+
+        .error-message {
+            text-align: center;
+            margin-top: 20px;
+            color: red;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .data-table th,
+        .data-table td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .data-table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .data-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .data-table tr:hover {
+            background-color: #ddd;
+        }
+        
+        .photo {
+            width: 100px;
+        }
+        
+        .download-link {
+            text-decoration: none;
+            color: blue;
+        }
+        
+        .edit-link,
+        .delete-link {
+            text-decoration: none;
+            color: green;
+            margin-right: 5px;
+        }
+        
+        .delete-link {
+            color: red;
+        }
+
+    </style>
+    </head>
+<body>
+<h2>Admin Panel</h2>
+<div class="form-container">
+    <form method="POST" action="" enctype="multipart/form-data">
+        <div class="form-group" style="display: flex; align-items: center;">
+            <label for="name" style="width: 10%;">Name:</label>
+            <input type="text" id="name" name="name" class="form-control" style="flex:2;" value="<?php echo htmlspecialchars($applicantName); ?>">
+            <label for="email" style="width: 10%;">Email:</label>
+            <input type="email" id="email" name="email" class="form-control" style="flex:2;" value="<?php echo htmlspecialchars($emailAddress); ?>">
+        </div>
+
+        <div class="form-group" style="display: flex; align-items: center;">
+            <label for="division" style="width: 25%;">Division:</label>
+            <select id="division" name="division" class="form-control" onchange="updateDistrictOptions(this)">
+                <?php echo generateOptions(array_keys($districtOptions), $selectedDivision); ?>
+            </select>
+        </div>
+
+        <div class="form-group" style="display: flex; align-items: center;">
+            <label for="district" style="width: 25%;">District:</label>
+            <select id="district" name="district" class="form-control" onchange="updateUpazilaOptions(this)">
+                <?php
+                if (!empty($selectedDivision)) {
+                    echo generateOptions($districtOptions[$selectedDivision], $selectedDistrict);
+                }
+                ?>
+            </select>
+        </div>
+
+        <div class="form-group" style="display: flex; align-items: center;">
+            <label for="upazila" style="width: 25%;">Upazila:</label>
+            <select id="upazila" name="upazila" class="form-control">
+                <?php
+                if (!empty($selectedDistrict)) {
+                    echo generateOptions($upazilaOptions[$selectedDistrict], $selectedUpazila);
+                }
+                ?>
+            </select>
+        </div>
+
+        <button type="submit" class="btn-primary">Search</button>
+    </form>
+</div>
+<script>
+    function updateDistrictOptions(divisionSelect) {
+        const selectedDivision = divisionSelect.value;
+        const districtSelect = document.getElementById('district');
+        districtSelect.innerHTML = generateOptions(<?php echo json_encode($districtOptions); ?>[selectedDivision]);
+        updateUpazilaOptions(districtSelect);
+    }
+
+    function updateUpazilaOptions(districtSelect) {
+        const selectedDistrict = districtSelect.value;
+        const upazilaSelect = document.getElementById('upazila');
+        upazilaSelect.innerHTML = generateOptions(<?php echo json_encode($upazilaOptions); ?>[selectedDistrict]);
+    }
+</script>
+
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    try {
+        $conn = new PDO('mysql:host=localhost;dbname=bigm', 'root', '');
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        function checkDataExists($conn, $applicantName, $emailAddress, $selectedDivision, $selectedDistrict, $selectedUpazila)
+        {
+            $query = "SELECT applicants.*, exam_infos.exam_name, exam_infos.board, exam_infos.university, exam_infos.result, training.training_name, training.training_details
+                  FROM applicants
+                  LEFT JOIN exam_infos ON applicants.id = exam_infos.applicant_id
+                  LEFT JOIN training ON applicants.id = training.applicant_id
+                  WHERE applicants.name = :name
+                  OR applicants.email = :email
+                  OR applicants.division = :division
+                  OR applicants.district = :district
+                  OR applicants.upazila = :upazila";
+
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':name', $applicantName);
+            $stmt->bindParam(':email', $emailAddress);
+            $stmt->bindParam(':division', $selectedDivision);
+            $stmt->bindParam(':district', $selectedDistrict);
+            $stmt->bindParam(':upazila', $selectedUpazila);
+            $stmt->execute();
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $data;
+        }
+
+        // Retrieve form inputs
+        $applicantName = $_POST['name'];
+        $emailAddress = $_POST['email'];
+        $selectedDivision = $_POST['division'];
+        $selectedDistrict = $_POST['district'];
+        $selectedUpazila = $_POST['upazila'];
+
+        // Check if data exists
+        $data = checkDataExists($conn, $applicantName, $emailAddress, $selectedDivision, $selectedDistrict, $selectedUpazila);
+
+        if (!empty($data)) {
+            echo '<table class="data-table">';
+            echo '<tr><th>ID</th><th>Name</th><th>Email</th><th>Division</th><th>District</th><th>Upazila</th><th>Exam Name</th><th>Board</th><th>University</th><th>Result</th><th>Training Name</th><th>Training Details</th><th>Photo</th><th>CV Attachment</th><th>Edit</th><th>Delete</th></tr>';
+
+            foreach ($data as $row) {
+                echo '<tr>';
+                echo '<td>' . $row['id'] . '</td>';
+                echo '<td>' . $row['name'] . '</td>';
+                echo '<td>' . $row['email'] . '</td>';
+                echo '<td>' . $row['division'] . '</td>';
+                echo '<td>' . $row['district'] . '</td>';
+                echo '<td>' . $row['upazila'] . '</td>';
+                echo '<td>' . $row['exam_name'] . '</td>';
+                echo '<td>' . $row['board'] . '</td>';
+                echo '<td>' . $row['university'] . '</td>';
+                echo '<td>' . $row['result'] . '</td>';
+                echo '<td>' . $row['training_name'] . '</td>';
+                echo '<td>' . $row['training_details'] . '</td>';
+                echo '<td><img src="' . $row['photo'] . '" alt="Photo" class="photo"></td>';
+                echo '<td><a href="' . $row['cv_attachment'] . '" class="download-link">Download CV</a></td>';
+                echo '<td><a href="edit.php?id=' . $row['id'] . '" class="edit-link">Edit</a></td>';
+                echo '<td><a href="delete.php?id=' . $row['id'] . '" class="delete-link">Delete</a></td>';
+                echo '</tr>';
+            }
+
+            echo '</table>';
+
+        } else {
+            $errorMessage = "No data found.";
+        }
+    } catch (PDOException $e) {
+        $errorMessage = "Connection failed: " . $e->getMessage();
+    }
+}
+?>
+ <script>
+
+
+const divisionDropdown = document.getElementById('division');
+    const districtDropdown = document.getElementById('district');
+    const upazilaDropdown = document.getElementById('upazila');
+
+    const options = {
+        Dhaka: {
+            'Dhaka District 1': ['Upazila 1', 'Upazila 2', 'Upazila 3'],
+            'Dhaka District 2': ['Upazila 4', 'Upazila 5', 'Upazila 6'],
+            'Dhaka District 3': ['Upazila 7', 'Upazila 8', 'Upazila 9'],
+        },
+        Chittagong: {
+            'Chittagong District 1': ['Upazila 10', 'Upazila 11', 'Upazila 12'],
+            'Chittagong District 2': ['Upazila 13', 'Upazila 14', 'Upazila 15'],
+            'Chittagong District 3': ['Upazila 16', 'Upazila 17', 'Upazila 18'],
+        },
+        Rajshahi: {
+            'Rajshahi District 1': ['Upazila 19', 'Upazila 20', 'Upazila 21'],
+            'Rajshahi District 2': ['Upazila 22', 'Upazila 23', 'Upazila 24'],
+            'Rajshahi District 3': ['Upazila 25', 'Upazila 26', 'Upazila 27'],
+        },
+    };
+
+    function updateOptions() {
+        const selectedDivision = divisionDropdown.value;
+        const selectedDistrict = districtDropdown.value;
+
+        // Clear existing options
+        districtDropdown.innerHTML = '';
+        upazilaDropdown.innerHTML = '';
+
+        // Add new district options
+        Object.keys(options[selectedDivision]).forEach(district => {
+            const option = document.createElement('option');
+            option.value = district;
+            option.textContent = district;
+            districtDropdown.appendChild(option);
+        });
+
+        // Add new upazila options
+        const selectedUpazilas = options[selectedDivision][selectedDistrict] || [];
+        selectedUpazilas.forEach(upazila => {
+            const option = document.createElement('option');
+            option.value = upazila;
+            option.textContent = upazila;
+            upazilaDropdown.appendChild(option);
+        });
+    }
+
+    divisionDropdown.addEventListener('change', updateOptions);
+    districtDropdown.addEventListener('change', updateOptions);
+</script>
+
+<?php
+if (isset($errorMessage)) {
+    echo '<div class="error-message">' . $errorMessage . '</div>';
+}
+?>
+</body>
+</html>
